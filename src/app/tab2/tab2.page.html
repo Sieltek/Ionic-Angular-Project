@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Actualité
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor='let article of objet.articles'>
+
+    <ion-img [src]="article.urlToImage"></ion-img>
+    
+    <ion-card-header>
+      <ion-card-title>
+        {{ article.title }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ article.description }}
+    </ion-card-content>
+
+    <ion-item [href]="article.url">
+      Aller voir
+    </ion-item>
+  </ion-card>  
+</ion-content>
