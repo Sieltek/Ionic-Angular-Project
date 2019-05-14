@@ -24,9 +24,10 @@ export class ConnexionPage {
 
     firebase.auth().signInWithEmailAndPassword(email,pass)
     .then((success)=>{
+      this.presentLoading().then(()=>{
       this.pushUserInLocalStorage(success.user.uid, success.user.email);
       this.validate();
-      this.presentLoading().then(()=>{
+
       this.redirect();
       });
     })
@@ -38,7 +39,7 @@ export class ConnexionPage {
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Loading data',
-      duration: 500
+      duration: 1000
     });
     await loading.present();
   }
@@ -54,7 +55,7 @@ export class ConnexionPage {
   }
 
   redirect(){
-    this.router.navigateByUrl('/tabs/tab1');
+    this.router.navigateByUrl('/tabs/tab2');
   }
 
   pushUserInLocalStorage(uid, email){

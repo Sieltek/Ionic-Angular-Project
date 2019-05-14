@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {LocalStorageService} from '../services/local-storage.service'
 import { AngularFirestore } from '@angular/fire/firestore';
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -13,19 +12,17 @@ export class Tab1Page implements OnInit{
   uid: string;
   email: string;
   pseudo: string;
-
+  
   constructor(private LocalStorageService: LocalStorageService, private db: AngularFirestore){ 
   }
 
   ngOnInit(){
-    console.log(localStorage)
     this.email = this.LocalStorageService.getEmail();
-    this.pseudo = this.LocalStorageService.getPseudo();
     this.uid = this.LocalStorageService.getUID();
   }
 
   ionViewDidEnter(){
-    
+    this.pseudo = this.LocalStorageService.getPseudo();
   }
 
   
