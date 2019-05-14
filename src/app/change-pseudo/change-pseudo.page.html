@@ -11,7 +11,7 @@
     <form #form="ngForm" (ngSubmit)="changePseudo(form)">
         <ion-item>
           <ion-label position="floating">Pseudo : </ion-label>
-          <ion-input name="pseudo" ngModel></ion-input>
+          <ion-input name="pseudo" placeholder="{{pseudo}}" ngModel></ion-input>
         </ion-item>
         <br>
         <ion-label color="danger">{{prompterror}}</ion-label>

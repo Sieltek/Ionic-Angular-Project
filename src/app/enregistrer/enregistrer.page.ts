@@ -3,7 +3,7 @@ import * as firebase from 'firebase';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-enregistrer',
@@ -15,7 +15,7 @@ export class EnregistrerPage{
   prompterror: string = '';
   user: string = '';
 
-  constructor(public toastController: ToastController, private router: Router) { }
+  constructor(public toastController: ToastController, private router: Router, private db: AngularFirestore) { }
 
   ngOnInit() { }
 
@@ -26,8 +26,8 @@ export class EnregistrerPage{
     if (pass == confpass){
       firebase.auth().createUserWithEmailAndPassword(email, pass)
       .then((success)=>{
-        localStorage.setItem('uid', success.user.uid);
-        localStorage.setItem('email', success.user.email);
+        this.pushUserInDataBase(success.user.uid, success.user.email);
+        this.pushUserInLocalStorage(success.user.uid, success.user.email);
         this.validate();
         this.redirect();
       })
@@ -46,11 +46,24 @@ export class EnregistrerPage{
       message: 'Votre compte a bien été créé',
       position: 'top',
       color: 'success',
-      duration: 2500
+      duration: 2000
     });
     toast.present();
   }
 
+  pushUserInDataBase(uid, email){
+    this.db.collection('User').doc(email).set({
+      'pseudo' : 'Anonyme',
+      'uid' : uid,
+    });
+  }
+
+  pushUserInLocalStorage(uid, email){
+    localStorage.setItem('uid', uid);
+    localStorage.setItem('email', email);
+    localStorage.setItem('pseudo', 'Anonyme');
+  }
+  
   redirect(){
     this.router.navigateByUrl('/tabs/tab1');
   }

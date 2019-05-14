@@ -38,7 +38,7 @@ export class ChangePasswordPage implements OnInit {
       message: 'Le mail a bien été envoyé à ' + this.email,
       position: 'top',
       color: 'success',
-      duration: 2500
+      duration: 2000
     });
     toast.present();
   }

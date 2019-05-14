@@ -18,25 +18,24 @@ export class Tab1Page implements OnInit{
   }
 
   ngOnInit(){
+    console.log(localStorage)
+    this.email = this.LocalStorageService.getEmail();
+    this.pseudo = this.LocalStorageService.getPseudo();
+    this.uid = this.LocalStorageService.getUID();
   }
 
   ionViewDidEnter(){
-    this.email = this.LocalStorageService.getEmail();
-    this.uid = this.LocalStorageService.getUID();
-    this.db.firestore.collection('User').where('uid', '==', this.uid).get()
-    .then((docs)=> {
-      docs.forEach((doc)=> {
-        this.pseudo = doc.data().pseudo;
-      });
-    });
+    
   }
 
+  
   update(){
     this.db.collection('User').doc(this.email).update({
       'pseudo' : 'polo',
     })
     .then(()=> {
-      console.log('update');
+      this.pseudo = 'polo';
+      localStorage.setItem('pseudo', 'polo');
     });
   }
 
@@ -62,7 +61,8 @@ export class Tab1Page implements OnInit{
       'uid' : this.uid,
     })
     .then(()=> {
-      console.log('add');
+      this.pseudo = 'Anonyme';
+      localStorage.setItem('pseudo', 'Anonyme');
     });
   }
 }

@@ -25,6 +25,7 @@ export class ChangePseudoPage implements OnInit {
   ionViewDidEnter(){
     this.email = this.LocalStorageService.getEmail();
     this.uid = this.LocalStorageService.getUID();
+    this.pseudo = this.LocalStorageService.getPseudo();
   }
 
   changePseudo(form){
@@ -33,6 +34,7 @@ export class ChangePseudoPage implements OnInit {
       'pseudo' : pseudo,
     })
     .then(()=> {
+      localStorage.setItem('pseudo', pseudo);
       this.validate();
       this.redirect();
     })
@@ -46,7 +48,7 @@ export class ChangePseudoPage implements OnInit {
       message: 'Votre pseudo a bien été modifé',
       position: 'top',
       color: 'success',
-      duration: 2500
+      duration: 2000
     });
     toast.present();
   }

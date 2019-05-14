@@ -28,7 +28,7 @@ export class LocalStorageService {
   }
 
   getPseudo(): string{
-    return;
+    return localStorage.getItem('pseudo');
   }
 
   signout(){

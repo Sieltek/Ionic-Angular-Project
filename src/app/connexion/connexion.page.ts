@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-connexion',
@@ -11,9 +12,8 @@ import { Router } from '@angular/router';
 export class ConnexionPage {
 
   prompterror: string = '';
-  user: string = '';
 
-  constructor(public toastController: ToastController, private router: Router) { }
+  constructor(public toastController: ToastController, private router: Router, private db: AngularFirestore,public loadingController: LoadingController) { }
 
   ngOnInit() {
    }
@@ -24,28 +24,48 @@ export class ConnexionPage {
 
     firebase.auth().signInWithEmailAndPassword(email,pass)
     .then((success)=>{
-      localStorage.setItem('uid', success.user.uid);
-      localStorage.setItem('email', success.user.email);
+      this.pushUserInLocalStorage(success.user.uid, success.user.email);
       this.validate();
+      this.presentLoading().then(()=>{
       this.redirect();
+      });
     })
     .catch((error)=>{
       this.prompterror = error.message;
     });
-
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading data',
+      duration: 500
+    });
+    await loading.present();
+  }
+  
   async validate() {
     const toast = await this.toastController.create({
       message: 'Vous vous êtes bien connecté !',
       position: 'top',
       color: 'success',
-      duration: 2500
+      duration: 2000
     });
     toast.present();
   }
 
   redirect(){
     this.router.navigateByUrl('/tabs/tab1');
+  }
+
+  pushUserInLocalStorage(uid, email){
+    localStorage.setItem('uid', uid);
+    localStorage.setItem('email', email);
+    this.db.firestore.collection('User').where('uid', '==', uid).get()
+    .then((docs)=> {
+      docs.forEach((doc)=> {
+        let pseudo = doc.data().pseudo;
+        localStorage.setItem('pseudo', pseudo)
+      });
+    });
   }
 }

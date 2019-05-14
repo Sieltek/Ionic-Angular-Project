@@ -7,7 +7,7 @@
       <ion-avatar>
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </ion-avatar>
-      <ion-label>{{email}}</ion-label>
+      <ion-label>{{pseudo}}</ion-label>
     </ion-chip>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
   <ion-card>
       <div *ngIf="this.LocalStorageService.isConnected() == false">
         <ion-item color="danger">
-          <ion-label text-wrap>Tu dois être connecté pour acceder à cette page.</ion-label>
+          <ion-label text-wrap>Vous devez être connecté pour acceder à cette page.</ion-label>
         </ion-item>
         <ion-item [routerLink]="['/tabs/tab3']"><ion-label>S'identifier</ion-label></ion-item>
       </div>

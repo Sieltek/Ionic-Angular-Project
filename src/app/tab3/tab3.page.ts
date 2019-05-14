@@ -21,5 +21,7 @@ export class Tab3Page {
         console.log(error);
       });
       this.LocalStorageService.signout();
+      console.log(localStorage)
+      window.location.reload();
   }
 }
