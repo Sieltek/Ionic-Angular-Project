@@ -27,6 +27,10 @@ export class LocalStorageService {
     return localStorage.getItem('email');
   }
 
+  getPseudo(): string{
+    return;
+  }
+
   signout(){
     localStorage.clear();
   }
