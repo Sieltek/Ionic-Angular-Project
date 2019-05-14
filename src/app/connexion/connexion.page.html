@@ -8,18 +8,20 @@
 </ion-header>
 
 <ion-content>
-    <form #form="ngForm" (ngSubmit)="login()">
+    <form #form="ngForm" (ngSubmit)="login(form)">
       <ion-item>
         <ion-label position="floating">Email : </ion-label>
-        <ion-input></ion-input>
+        <ion-input name="email" ngModel></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Mot de passe : </ion-label>
-        <ion-input></ion-input>
+        <ion-input type="password" name="pass" ngModel></ion-input>
       </ion-item>
       <br>
+      <ion-label color="danger">{{prompterror}}</ion-label>
+      <br>
       <ion-button expand="full" type="submit">
-          S'enregistrer
+          Se connecter
       </ion-button>
     </form>
 </ion-content>

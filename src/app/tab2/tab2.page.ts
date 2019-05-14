@@ -12,7 +12,6 @@ export class Tab2Page {
     this.http.get('https://newsapi.org/v2/top-headlines?sources=google-news-fr&apiKey=10edc5183945436fbc3865e3ca1c9f9a')
     .subscribe((data)=>{
       this.objet = data;
-      console.log(data)
     })
    }
 }

@@ -12,19 +12,21 @@
     <form #form="ngForm" (ngSubmit)="register(form)">
       <ion-item>
         <ion-label position="floating">Email : </ion-label>
-        <ion-input name="email" type="email"></ion-input>
+        <ion-input name="email" type="email" ngModel></ion-input>
       </ion-item>
       <br>
       <br>
       <ion-item>
         <ion-label position="floating">Mot de passe : </ion-label>
-        <ion-input name="pass" type="password"></ion-input>
+        <ion-input name="pass" type="password" ngModel></ion-input>
       </ion-item>
       <br>
       <ion-item>
         <ion-label position="floating">Confirmer le mot de passe : </ion-label>
-        <ion-input name="confpass" type="password"></ion-input>
+        <ion-input name="confpass" type="password" ngModel></ion-input>
       </ion-item>
+      <br>
+      <ion-label color="danger">{{prompterror}}</ion-label>
       <br>
       <ion-button expand="full" type="submit">
         S'enregistrer

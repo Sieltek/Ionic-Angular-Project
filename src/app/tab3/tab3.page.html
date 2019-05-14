@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="this.LocalStorageService.isConnected() == false">
     <ion-item [routerLink]="['/connexion']">
       <ion-label>
         Se connecter
@@ -17,4 +18,28 @@
         Créer un compte
       </ion-label>
     </ion-item>
+  </div>
+  <div *ngIf="this.LocalStorageService.isConnected() == true">
+    <ion-item>
+      <ion-label>
+        Changer de pseudo
+      </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>
+          Ajouter des amis
+        </ion-label>
+     </ion-item>
+    <ion-item>
+      <ion-label>
+        Changer de mot de passe
+      </ion-label>
+    </ion-item>
+    <br><br><br>
+    <ion-button expand="full" color="danger" (click)="signOutUser()">
+      <ion-label>
+        Logout
+      </ion-label>
+    </ion-button>
+  </div>
 </ion-content>
