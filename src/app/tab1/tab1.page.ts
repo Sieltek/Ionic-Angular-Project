@@ -14,7 +14,7 @@ export class Tab1Page implements OnInit{
   email: string;
   pseudo: string;
 
-  constructor(private LocalStorageService: LocalStorageService,private db: AngularFirestore){ 
+  constructor(private LocalStorageService: LocalStorageService, private db: AngularFirestore){ 
   }
 
   ngOnInit(){
@@ -58,7 +58,7 @@ export class Tab1Page implements OnInit{
 
   add(){
     this.db.collection('User').doc(this.email).set({
-      'pseudo' : 'marco',
+      'pseudo' : 'Anonyme',
       'uid' : this.uid,
     })
     .then(()=> {

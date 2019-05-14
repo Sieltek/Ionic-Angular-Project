@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import {LocalStorageService} from '../services/local-storage.service'
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-pseudo',
@@ -7,9 +11,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangePseudoPage implements OnInit {
 
-  constructor() { }
+  email: string;
+  uid: string;
+  pseudo: string;
+
+  constructor(private LocalStorageService: LocalStorageService, private db: AngularFirestore,public toastController: ToastController, private router: Router) { }
+
+  prompterror: string;
 
   ngOnInit() {
   }
 
+  ionViewDidEnter(){
+    this.email = this.LocalStorageService.getEmail();
+    this.uid = this.LocalStorageService.getUID();
+  }
+
+  changePseudo(form){
+    const pseudo = form.value['pseudo'];
+    this.db.collection('User').doc(this.email).update({
+      'pseudo' : pseudo,
+    })
+    .then(()=> {
+      this.validate();
+      this.redirect();
+    })
+    .catch((error)=>{
+      this.prompterror = error.message;
+    });
+  }
+
+  async validate() {
+    const toast = await this.toastController.create({
+      message: 'Votre pseudo a bien été modifé',
+      position: 'top',
+      color: 'success',
+      duration: 2500
+    });
+    toast.present();
+  }
+
+  redirect(){
+    this.router.navigateByUrl('/tabs/tab1');
+  }
 }
