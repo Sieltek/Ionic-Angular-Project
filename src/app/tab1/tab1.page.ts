@@ -12,7 +12,8 @@ export class Tab1Page implements OnInit{
   uid: string;
   email: string;
   pseudo: string;
-  
+  listFriends: any[] = [];
+
   constructor(private LocalStorageService: LocalStorageService, private db: AngularFirestore){ 
   }
 
@@ -22,44 +23,17 @@ export class Tab1Page implements OnInit{
   }
 
   ionViewDidEnter(){
+    this.listFriends = [];
     this.pseudo = this.LocalStorageService.getPseudo();
+    this.getFriends();
   }
 
-  
-  update(){
-    this.db.collection('User').doc(this.email).update({
-      'pseudo' : 'polo',
-    })
-    .then(()=> {
-      this.pseudo = 'polo';
-      localStorage.setItem('pseudo', 'polo');
-    });
-  }
-
-  prompt(){
-    this.db.firestore.collection('User').where('uid', '==', this.uid).get()
-    .then((docs)=> {
-      docs.forEach((doc)=> {
-        this.pseudo = doc.data().pseudo;
+  getFriends(){
+    this.db.firestore.collection('User').doc(this.email).collection('Amis').get()
+    .then((docs)=>{
+      docs.forEach((doc)=>{
+        this.listFriends.push(doc.data());
       });
-    });
-  }
-
-  delete(){
-    this.db.collection('User').doc(this.email).delete()
-    .then(()=> {
-      console.log('delete');
-    });
-  }
-
-  add(){
-    this.db.collection('User').doc(this.email).set({
-      'pseudo' : 'Anonyme',
-      'uid' : this.uid,
-    })
-    .then(()=> {
-      this.pseudo = 'Anonyme';
-      localStorage.setItem('pseudo', 'Anonyme');
     });
   }
 }

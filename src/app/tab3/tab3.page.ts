@@ -16,12 +16,11 @@ export class Tab3Page {
 
   }
   signOutUser() {
-      firebase.auth().signOut()
-      .catch((error)=>{
-        console.log(error);
-      });
-      this.LocalStorageService.signout();
-      console.log(localStorage)
-      window.location.reload();
+    firebase.auth().signOut()
+    .catch((error)=>{
+      console.log(error);
+    });
+    this.LocalStorageService.signout();
+    console.log(localStorage)
   }
 }

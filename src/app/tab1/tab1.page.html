@@ -13,7 +13,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
       <div *ngIf="this.LocalStorageService.isConnected() == false">
         <ion-item color="danger">
           <ion-label text-wrap>Vous devez être connecté pour acceder à cette page.</ion-label>
@@ -21,20 +20,16 @@
         <ion-item [routerLink]="['/tabs/tab3']"><ion-label>S'identifier</ion-label></ion-item>
       </div>
       <div *ngIf="this.LocalStorageService.isConnected() == true"> 
-        <ion-label text-wrap>Welcome {{email}}</ion-label><br>
-        <ion-label text-wrap>pseudo {{pseudo}}</ion-label><br>
-        <ion-button (click)="add()">
-          add
-        </ion-button>
-        <ion-button (click)="update()">
-          update
-        </ion-button>
-        <ion-button (click)="delete()">
-          delete
-        </ion-button>
-        <ion-button (click)="prompt()">
-            prompt
-          </ion-button>
+        <h2 padding>Amis</h2>
+      <ion-list>
+        <ion-label *ngFor='let listFriend of listFriends' >
+          <ion-item>
+            <ion-label>
+              {{listFriend.pseudo}} <br> {{listFriend.email}} <br>
+              <ion-button>Gérer</ion-button>
+            </ion-label>
+          </ion-item>
+        </ion-label>
+      </ion-list>
       </div>
-  </ion-card>
 </ion-content>

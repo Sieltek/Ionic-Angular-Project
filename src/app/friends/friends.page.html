@@ -5,8 +5,29 @@
       </ion-buttons>
     <ion-title>Ajouter des amis</ion-title>
   </ion-toolbar>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="triggerSearch(searchTerm)" placeholder="Rechercher une adresse mail"></ion-searchbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content padding>
+    <div *ngIf="this.LocalStorageService.isConnected() == false">
+      <ion-item color="danger">
+        <ion-label text-wrap>Vous devez être connecté pour acceder à cette page.</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="['/tabs/tab3']"><ion-label>S'identifier</ion-label></ion-item>
+    </div>
+    <div *ngIf="this.LocalStorageService.isConnected() == true">
+      
+      <ion-card *ngFor='let listUser of promptUsers'>
+        <ion-card-header>
+          <ion-card-title>{{listUser.info.pseudo}}</ion-card-title>     
+            <ion-label>{{listUser.email}}</ion-label><br>
+            <ng-template [ngIf]="listUser.friends" [ngIfElse]="notFriend">
+              <ion-button (click)="removeFriend(listUser.email)">Supprimer</ion-button>
+            </ng-template>
+            <ng-template #notFriend>
+              <ion-button (click)="addFriend(listUser.info.uid, listUser.info.pseudo, listUser.email)">Ajouter</ion-button>
+            </ng-template>
+        </ion-card-header>
+      </ion-card>
+    </div>
 </ion-content>
